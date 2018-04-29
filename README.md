@@ -22,6 +22,22 @@ or add
 to the require section of your `composer.json` file.
 
 
+Run migration
+```bash
+./console/yii migrate --migrationPath=vendor/ignatenkovnikita/yii2-user-device/migrations/
+```
+
+Add in config section module
+```php
+'modules' => [
+    ...
+    'user-device' => [
+        'class' => \ignatenkovnikita\device\UserDevice::class
+    ],
+    ...
+],
+```
+
 Usage
 -----
 

@@ -2,7 +2,9 @@
 
 namespace ignatenkovnikita\device\models;
 
-use Yii;
+use  ignatenkovnikita\device\interfaces\UserDeviceInterface;
+use  Yii;
+use yii\behaviors\AttributeBehavior;
 use yii\db\ActiveRecord;
 
 /**
@@ -13,12 +15,13 @@ use yii\db\ActiveRecord;
  * @property integer $status_id Status ID
  * @property string $json Json
  * @property string $token Token
+ * @property string $access_token Access Token
  * @property integer $created_at Created At
  * @property integer $updated_at Updated At
  * @property integer $author_id Author ID
  * @property integer $updater_id Updater ID
  */
-class UserDevice extends ActiveRecord
+class UserDevice extends ActiveRecord implements UserDeviceInterface
 {
 
     /**
@@ -28,6 +31,21 @@ class UserDevice extends ActiveRecord
     {
         return [
             'timestamp' => \yii\behaviors\TimestampBehavior::class,
+            'access_token' => [
+                'class' => AttributeBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => 'access_token'
+                ],
+                'value' => function () {
+                    return Yii::$app->getSecurity()->generateRandomString(40);
+                }
+            ],
+            'author' => [
+                'class' => \yii\behaviors\BlameableBehavior::class,
+                'createdByAttribute' => 'author_id',
+                'updatedByAttribute' => 'updater_id',
+            ],
+
         ];
     }
 
@@ -48,7 +66,7 @@ class UserDevice extends ActiveRecord
             [['uuid', 'token'], 'required'],
             [['status_id', 'created_at', 'updated_at', 'author_id', 'updater_id'], 'integer'],
             [['json'], 'string'],
-            [['uuid', 'token'], 'string', 'max' => 255],
+            [['uuid', 'token', 'access_token'], 'string', 'max' => 255],
             [['uuid'], 'unique'],
         ];
     }
@@ -78,5 +96,29 @@ class UserDevice extends ActiveRecord
     public static function find()
     {
         return new UserDeviceQuery(get_called_class());
+    }
+
+
+    public static function findIdentity($id)
+    {
+        return self::findOne($id);
+    }
+
+    /**
+     * @param $domain
+     * @return mixed
+     */
+
+    public static function findIdentityByToken($token)
+    {
+        return self::find()->andWhere(['access_token' => $token])->one();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 }

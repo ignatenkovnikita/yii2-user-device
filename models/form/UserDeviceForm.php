@@ -30,6 +30,9 @@ class UserDeviceForm extends Model
     public $json;
     public $created_by;
 
+    /** @var UserDevice $_model */
+    private $_model;
+
 
     public function rules()
     {
@@ -62,10 +65,16 @@ class UserDeviceForm extends Model
             $model->load($this->attributes, '');
 
             if ($model->save()) {
+                $this->_model = $model;
                 return true;
             }
         }
 
         return false;
+    }
+
+    public function getModel()
+    {
+        return $this->_model;
     }
 }

@@ -54,7 +54,7 @@ class UserDevice extends ActiveRecord implements UserDeviceInterface
      */
     public static function tableName()
     {
-        return 'user_device';
+        return '{{%user_device}}';
     }
 
     /**

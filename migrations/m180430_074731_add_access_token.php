@@ -7,7 +7,7 @@ use yii\db\Migration;
  */
 class m180430_074731_add_access_token extends Migration
 {
-    const TABLE_USER_DEVICE = 'user_device';
+    const TABLE_USER_DEVICE = '{{%user_device}}';
 
     /**
      * {@inheritdoc}

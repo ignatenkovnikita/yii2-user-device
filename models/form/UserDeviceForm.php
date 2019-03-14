@@ -37,6 +37,12 @@ class UserDeviceForm extends Model
     public function rules()
     {
         return [
+            ['uuid', 'filter', 'filter' => function ($value) {
+                if (is_null($value)) {
+                    $value = \Yii::$app->security->generateRandomString();
+                }
+                return $value;
+            }],
             [['uuid', 'os', 'token'], 'required'],
             [['created_by'], 'integer'],
             ['json', 'filter', 'filter' => function ($value) {

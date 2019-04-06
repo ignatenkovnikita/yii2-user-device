@@ -18,7 +18,6 @@ namespace ignatenkovnikita\device\models\form;
 
 
 use ignatenkovnikita\device\models\UserDevice;
-use yii\base\Exception;
 use yii\base\Model;
 
 class UserDeviceForm extends Model
@@ -54,7 +53,7 @@ class UserDeviceForm extends Model
 //            ['created_by', 'filter', 'filter' => function ($value) {
 //                return \Yii::$app->user->id;
 //            }],
-            [['os'], 'in', 'range' => ['android', 'ios']],
+            [['os'], 'in', 'range' => ['android', 'ios', 'web']],
             [['json', 'token'], 'string'],
             [['uuid'], 'string', 'max' => 255],
         ];

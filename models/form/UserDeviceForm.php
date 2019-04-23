@@ -62,7 +62,7 @@ class UserDeviceForm extends Model
     public function save()
     {
         if ($this->validate()) {
-            $model = UserDevice::find()->andWhere(['uuid' => $this->uuid])->one();
+            $model = UserDevice::find()->andWhere(['or',['uuid' => $this->uuid],['token' => $this->token]])->one();
             if (empty($model)) {
                 $model = new UserDevice();
             }

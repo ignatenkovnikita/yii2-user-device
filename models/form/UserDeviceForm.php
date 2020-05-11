@@ -26,6 +26,7 @@ class UserDeviceForm extends Model
     public $uuid;
     public $token;
     public $os;
+    public $version;
     public $json;
     public $created_by;
 
@@ -50,12 +51,9 @@ class UserDeviceForm extends Model
                 }
                 return $value;
             }],
-//            ['created_by', 'filter', 'filter' => function ($value) {
-//                return \Yii::$app->user->id;
-//            }],
             [['os'], 'in', 'range' => ['android', 'ios', 'web']],
             [['json', 'token'], 'string'],
-            [['uuid'], 'string', 'max' => 255],
+            [['uuid', 'version'], 'string', 'max' => 255],
         ];
     }
 

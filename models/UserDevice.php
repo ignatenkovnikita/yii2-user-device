@@ -66,7 +66,7 @@ class UserDevice extends ActiveRecord implements UserDeviceInterface
             [['uuid', 'token'], 'required'],
             [['status_id', 'created_at', 'updated_at', 'author_id', 'updater_id'], 'integer'],
             [['json'], 'string'],
-            [['uuid', 'token', 'access_token'], 'string', 'max' => 255],
+            [['uuid', 'token', 'access_token','os','version'], 'string', 'max' => 255],
             [['uuid'], 'unique'],
         ];
     }

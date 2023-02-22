@@ -63,7 +63,7 @@ class UserDevice extends ActiveRecord implements UserDeviceInterface
     public function rules()
     {
         return [
-            [['uuid', 'token'], 'required'],
+            [['uuid'], 'required'],
             [['status_id', 'created_at', 'updated_at', 'author_id', 'updater_id'], 'integer'],
             [['json'], 'string'],
             [['uuid', 'token', 'access_token','os','version'], 'string', 'max' => 255],

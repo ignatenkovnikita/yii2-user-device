@@ -43,7 +43,7 @@ class UserDeviceForm extends Model
                 }
                 return $value;
             }],
-            [['uuid', 'os', 'token'], 'required'],
+            [['uuid', 'os'], 'required'],
             [['created_by'], 'integer'],
             ['json', 'filter', 'filter' => function ($value) {
                 if (is_array($value)) {
